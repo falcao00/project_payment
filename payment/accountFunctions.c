@@ -6,9 +6,9 @@
 #define DATA_SIZE 1000
 
 typedef struct{
-     char name[20];
-     char password[20];
-     int  id[5];
+  char name[20];
+  char password[20];
+  int  id[5];
 } data;
 
 int accountCreation(void){
