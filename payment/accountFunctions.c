@@ -11,7 +11,11 @@ typedef struct{
   int  id[5];
 } data;
 
+struct cardInfo falcon = {.idCardNumber = "1234-5678-9123-4567", .password = "1234", .amount = 100};
+
 int accountCreation(void){
+
+  
   data acc;
   char data[DATA_SIZE];
   
