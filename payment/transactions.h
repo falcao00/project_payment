@@ -3,9 +3,9 @@
 
 int transactionCreditP(int transactionAmount, int parcelas, char carNumber, char cardPassword);
 
-int transactionCreditA(void);
+int transactionPix(int transactionAmount, char pixChave);
 
-int transactionPix(void);
+int transactionCreditA(void);
 
 int transactionEstorno(void);
 

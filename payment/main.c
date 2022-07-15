@@ -6,7 +6,7 @@ int main(void){
   _Bool aplicationMain = true;
   _Bool aplicationMain2 = true;
   int amount, parcelas;
-  char cardnumber, cardpass;
+  char cardnumber, cardpass, chavePix;
   while(aplicationMain){
     printf("Menu de Opções\n");
     printf("[1]-Realizar Pagamento\n");
@@ -38,7 +38,7 @@ int main(void){
               printf("Senha do Cartão: ");
               scanf("%s", &cardpass);
               int result = transactionCreditP(amount, parcelas, cardnumber, cardpass);
-              if(result == -1)
+              if(result != 0)
                 printf("Falha na Transação\n");
               break;
             case 2:
@@ -46,11 +46,19 @@ int main(void){
               break;
             case 3:
               printf("Iniciando uma compra PIX\n");
+              printf("Valor da Transação: ");
+              scanf("%d", &amount);
+              printf("Chave Pix: ");
+              scanf("%s", &chavePix);
+              int iret =transactionPix(amount, chavePix);
+              if(result != 0)
+                printf("Falha na Transação\n");
               break;
             case 4:
               aplicationMain2 = false;
               break;
             default:
+              aplicationMain2 = false;
               break;
           }
         }
