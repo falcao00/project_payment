@@ -1,7 +1,7 @@
 #ifndef TRANSACTIONS_H_INCLUDED
 #define TRANSACTIONS_H_INCLUDED
 
-int transactionCreditP(char* transactionAmount, char* cardNumber);
+int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcelas, char* cardPassword);
 
 int transactionPix(int transactionAmount, char pixChave);
 

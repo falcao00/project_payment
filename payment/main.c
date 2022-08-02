@@ -7,9 +7,9 @@ int main(void){
   _Bool aplicationMain = true;
   _Bool aplicationMain2 = true;
   int parcelas;
-  char cardnumber, cardpass, chavePix;
   char amount[1024];
   char cardNumber[1024];
+  char cardPassword[1024];
   //strcpy(cardNumber, "1234-5678-9123-4567");
   /*strcpy(amount, "100");
   printf("%s\n", amount);
@@ -21,12 +21,17 @@ int main(void){
     scanf("%d", &functionValue);
     switch(functionValue){
       case 1:
-        printf("Digitar os valores: \n");
-        printf("Valor da Transação: ");
-        scanf("%s", amount);
-        printf("\nNumero do Cartão: ");
+        /*printf("Digitar os valores: \n");
+        printf("Numero do Cartão: ");
         scanf("%s", cardNumber);
-        int result = transactionCreditP(&amount, &cardNumber);
+        printf("\nValor da Transação: ");
+        scanf("%s", amount);
+        printf("\nNumero de Parcelas: ");
+        scanf("%d", &parcelas);
+        printf("\nSenha do Cartão: ");
+        scanf("%s", cardPassword);
+        int result = transactionCreditP(&amount, &cardNumber, parcelas, &cardPassword);*/
+        int result = transactionCreditP("100", "123456789", 2, "123456");
         break;
       default:
         aplicationMain = false;
