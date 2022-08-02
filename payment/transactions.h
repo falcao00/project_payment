@@ -1,9 +1,11 @@
 #ifndef TRANSACTIONS_H_INCLUDED
 #define TRANSACTIONS_H_INCLUDED
 
-int transactionCreditP(int transactionAmount, int parcelas, char carNumber, char cardPassword);
+int transactionCreditP(char* transactionAmount, char* cardNumber);
 
 int transactionPix(int transactionAmount, char pixChave);
+
+int logTransaction(char* value1, char* value2);
 
 int transactionCreditA(void);
 
