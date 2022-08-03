@@ -13,6 +13,9 @@ extern struct cardInfo helena;
  * 
 */
 int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcelas, char* cardPassword){
+  char cardNumberAccount[1024];
+  char passWordNumberAccount[1024];
+  char creditCardAmountAccount[1024];
   printf("Logando no Arquivo logTransaction\n");
   printf("\n\n>>Valor do Amount Inputado: %s<<\n\n", transactionAmount);
   printf("\n\n>>Valor do Amount Inputado: %s<<\n\n", cardNumber);
@@ -30,12 +33,28 @@ int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcela
   printf("\n\n>>>>>>Valores do Arquivo: %s<<<<<<\n\n", tmpAcountValue); //0001;123;200
   char valuesAccount[sizeof(tmpAcountValue)];
   strcpy(valuesAccount, strtok(tmpAcountValue, ";"));
-  while (valuesAccount != NULL)
+  struct cardInfo account;
+  for (int i = 0; i < 3; i++)
   {
-    printf("Atributo: %s\n\n", valuesAccount);
+    if(i == 0) {
+      printf("Numero do Cartão: %s\n\n", valuesAccount);
+      strcpy(cardNumberAccount, valuesAccount);
+    } else if (i == 1) {
+      printf("Senha do cartão: %s\n\n", valuesAccount);
+      strcpy(passWordNumberAccount, valuesAccount);
+    } else {
+      printf("Credito Disponivel: %s\n\n", valuesAccount);
+      strcpy(creditCardAmountAccount, valuesAccount);
+      break;
+    }
     strcpy(valuesAccount, strtok(NULL, ";"));
   }
-  printf("\n\n>>>>CHEGA AQUI?<<<<\n\n");
+  /*printf("Os valores Populados na estrutura\nNumero do Cartão: %s\n\n", cardNumberAccount);
+  printf("Os valores Populados na estrutura\nSenha do Cartão: %s\n\n", passWordNumberAccount);
+  printf("Os valores Populados na estrutura\nCredito Disponivel: %s\n\n", creditCardAmountAccount);*/
+
+  //DANDO SEGMENTED FAULT TODO(FALCAO 02/08)
+  //printf("\n\n>>>>CHEGA AQUI?<<<<\n\n");
   
   fclose(fileAccount);
 
@@ -47,11 +66,11 @@ int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcela
 
 int transactionPix(int transactionAmount, char pixChave){
   
-  if(transactionAmount <= 0 /*|| pixChave == NULL*/)
+  /*if(transactionAmount <= 0 /*|| pixChave == NULL)
     return -1;
 
   *falcon.amount = *falcon.amount - transactionAmount;
-  printf("Valor final em conta: %d\n", *falcon.amount);
+  printf("Valor final em conta: %d\n", *falcon.amount);*/
   return 0;
 }
 

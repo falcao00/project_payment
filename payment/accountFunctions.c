@@ -11,7 +11,7 @@ typedef struct{
   int  id[5];
 } data;
 
-struct cardInfo falcon = {.idCardNumber = "01", .password = "01", .amount = 100};
+/*struct cardInfo falcon = {.idCardNumber = "01", .password = "01", .amount = 100};
 struct cardInfo helena = {.idCardNumber = "02", .password = "02", .amount = 200};
 
 int accountCreation(void){
@@ -41,4 +41,4 @@ int accountCreation(void){
   printf("File created and saved successfully. :) \n");
 
   return 0;
-}
+}*/
