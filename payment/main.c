@@ -21,7 +21,7 @@ int main(void){
     scanf("%d", &functionValue);
     switch(functionValue){
       case 1:
-        /*printf("Digitar os valores: \n");
+        printf("Digitar os valores: \n");
         printf("Numero do Cartão: ");
         scanf("%s", cardNumber);
         printf("\nValor da Transação: ");
@@ -30,8 +30,9 @@ int main(void){
         scanf("%d", &parcelas);
         printf("\nSenha do Cartão: ");
         scanf("%s", cardPassword);
-        int result = transactionCreditP(&amount, &cardNumber, parcelas, &cardPassword);*/
-        int result = transactionCreditP("100", "123456789", 2, "123456");
+        int result = transactionCreditP(&amount, &cardNumber, parcelas, &cardPassword);
+        //int result = transactionCreditP("100", "1234-5678-9123-4567", 2, "159753");
+        //printf("%d\n\n", result);
         break;
       default:
         aplicationMain = false;
