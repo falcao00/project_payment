@@ -3,7 +3,7 @@
 
 int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcelas, char* cardPassword);
 
-int transactionPix(int transactionAmount, char pixChave);
+int transactionPix(char* transactionAmount, char* pixChave);
 
 int logTransaction(char* value1, char* value2);
 

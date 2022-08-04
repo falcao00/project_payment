@@ -6,17 +6,16 @@
 int main(void){
   _Bool aplicationMain = true;
   _Bool aplicationMain2 = true;
-  int parcelas;
+  int parcelas, result;
   char amount[1024];
   char cardNumber[1024];
   char cardPassword[1024];
-  //strcpy(cardNumber, "1234-5678-9123-4567");
-  /*strcpy(amount, "100");
-  printf("%s\n", amount);
-  printf("%s\n", cardNumber);*/
+  char pixKey[1024];
   while(aplicationMain){
     printf("Menu de Opções\n");
-    printf("[1]-Realizar Pagamento\n");
+    printf("[1]- Credito Parcelado\n");
+    printf("[2]- Pagamento Pix\n");
+    printf("[3]- Estorno\n");
     int functionValue = 0;
     scanf("%d", &functionValue);
     switch(functionValue){
@@ -30,9 +29,15 @@ int main(void){
         scanf("%d", &parcelas);
         printf("\nSenha do Cartão: ");
         scanf("%s", cardPassword);
-        int result = transactionCreditP(&amount, &cardNumber, parcelas, &cardPassword);
-        //int result = transactionCreditP("100", "1234-5678-9123-4567", 2, "159753");
-        //printf("%d\n\n", result);
+        result = transactionCreditP(&amount, &cardNumber, parcelas, &cardPassword);
+        break;
+      case 2:
+        printf("Digitar os valores: \n");
+        printf("Chave Pix: ");
+        scanf("%s", pixKey);
+        printf("\nValor da Transação: ");
+        scanf("%s", amount);
+        result = transactionPix(&amount, &pixKey);
         break;
       default:
         aplicationMain = false;
