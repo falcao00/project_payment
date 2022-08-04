@@ -5,10 +5,8 @@ int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcela
 
 int transactionPix(char* transactionAmount, char* pixChave);
 
-int logTransaction(char* value1, char* value2);
+int logTransaction(char* cardNumber, char* amountTrans);
 
-int transactionCreditA(void);
-
-int transactionEstorno(void);
+int estornoFunction(char* cardNumber, char* cardPassword);
 
 #endif

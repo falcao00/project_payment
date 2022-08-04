@@ -39,6 +39,9 @@ int main(void){
         scanf("%s", amount);
         result = transactionPix(&amount, &pixKey);
         break;
+      case 3:
+        result = estornoFunction("1234-5678-9123-4567", "159753");
+        break;
       default:
         aplicationMain = false;
         break;

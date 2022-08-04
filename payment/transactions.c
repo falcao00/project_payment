@@ -161,14 +161,83 @@ int transactionPix(char* transactionAmount, char* pixChave){
   return 0;
 }
 
-int logTransaction(char* value1, char* value2){
+int logTransaction(char* cardNumber, char* amountTrans){
   FILE * LogTransfile;
   LogTransfile = fopen("../logTransaction/logTransFile.txt", "w");
   char transValue[1024];
-  strcpy(transValue, value1);
+  strcpy(transValue, cardNumber);
   strcat(transValue, ";");
-  strcat(transValue, value2);
+  strcat(transValue, amountTrans);
   fputs(transValue, LogTransfile);
   fclose(LogTransfile);
+  return 0;
+}
+
+int estornoFunction(char* cardNumber, char* cardPassword){
+
+  char logCardAccount[1024];
+  char logAmount[1024];
+
+  FILE* fileAccount = fopen("../logTransaction/logTransFile.txt", "r");
+  if(fileAccount == NULL){
+    printf("Erro ao abrir o arquivo\n");
+    return -1;
+  }
+  char tmpAcountValue[1024];
+  fgets(tmpAcountValue, sizeof(tmpAcountValue), fileAccount);
+  char valuesAccount[sizeof(tmpAcountValue)];
+  strcpy(valuesAccount, strtok(tmpAcountValue, ";"));
+
+  //popular variaveis com os valores do arquivo de log
+  for (int i = 0; i < 2; i++)
+  {
+    if(i == 0) {
+      printf("Numero do cartão: %s\n\n", valuesAccount);
+      strcpy(logCardAccount, valuesAccount);
+    } else {
+      printf("Valor da ultima transação: %s\n\n", valuesAccount);
+      strcpy(logAmount, valuesAccount);
+      break;
+    }
+    strcpy(valuesAccount, strtok(NULL, ";"));
+  }
+  fclose(fileAccount);
+  printf("Valores recuperados numero do cartão: %s\n\n", logCardAccount);
+  printf("Valores recuperados Amount: %s\n\n", logAmount);
+
+  //abrindo o arquivo do account-card
+  FILE * fileAccountcard = fopen("../accounts/account-card.txt", "r");
+  if(fileAccountcard == NULL){
+    printf("Erro ao abrir o arquivo\n");
+    return -1;
+  }
+  char valuesAccount2[1024];
+  char cardAccount[1024];
+  char cardPassw[1024];
+  char cardAmount[1024];
+  char tmpAcountValue2[1024];
+  fgets(tmpAcountValue2, sizeof(tmpAcountValue2), fileAccount);
+  //char valuesAccount2[sizeof(tmpAcountValue2)];
+  strcpy(valuesAccount2, strtok(tmpAcountValue2, ";"));
+  //struct cardInfo account;
+  //populando as Variaveis com as informações do Cartao
+  for (int i = 0; i < 3; i++)
+  {
+    if(i == 0) {
+      printf("Cartão da conta: %s\n\n", valuesAccount2);
+      strcpy(cardAccount, valuesAccount2);
+    } else if (i == 1) {
+      printf("Senha da conta: %s\n\n", valuesAccount2);
+      strcpy(cardPassw, valuesAccount2);
+    } else {
+      printf("Credito da Conta: %s\n\n", valuesAccount2);
+      strcpy(cardAmount, valuesAccount2);
+      break;
+    }
+    strcpy(valuesAccount2, strtok(NULL, ";"));
+  }
+  fclose(fileAccountcard);
+
+
   return 0;
 }
