@@ -11,6 +11,7 @@ int main(void){
   char cardNumber[1024];
   char cardPassword[1024];
   char pixKey[1024];
+  //char estornoCard[1024];
   while(aplicationMain){
     printf("Menu de Opções\n");
     printf("[1]- Credito Parcelado\n");
@@ -40,71 +41,18 @@ int main(void){
         result = transactionPix(&amount, &pixKey);
         break;
       case 3:
-        result = estornoFunction("1234-5678-9123-4567", "159753");
+        printf("Digite as informacoes do cartao para o estorno: \n");
+        printf("Numero do Cartão: ");
+        scanf("%s", cardNumber);
+        printf("\nSenha do Cartão: ");
+        scanf("%s", cardPassword);
+        result = estornoFunction(cardNumber, cardPassword);
+        printf("resultado do estorno: %d\n\n", result);
         break;
       default:
         aplicationMain = false;
         break;
     }
-    /*printf("Menu de Opções\n");
-    printf("[1]-Realizar Pagamento\n");
-    printf("[2]-Estorno\n");
-    printf("[3]-Sair\n\n");
-    printf("Selecione a Opção: ");
-    int functionValue = 0;
-    scanf("%d", &functionValue);
-    switch(functionValue){
-      case 1:
-        int functionValue2;
-        while (aplicationMain2){
-          printf("[1]-Credito Parcelado\n");
-          printf("[2]-Credito Avista\n");
-          printf("[3]-PIX\n");
-          printf("[4]-Sair\n\n");
-          functionValue2 = 0;
-          printf("Selecione a Opção: ");
-          scanf("%d", &functionValue2);
-          switch (functionValue2){
-            case 1:
-              printf("Iniciando uma compra Credito Parcelada\n");
-              printf("Valor da Transação: ");
-              scanf("%s", amount);
-              printf("Numero de Parcelas: ");
-              scanf("%d", &parcelas);
-              printf("Numero do Cartão: ");
-              scanf("%s", cardnumber);
-              printf("Senha do Cartão: ");
-              scanf("%s", &cardpass);
-              int result = transactionCreditP(amount, parcelas, cardnumber, cardpass);
-              if(result != 0)
-                printf("Falha na Transação\n");
-              break;
-            case 2:
-              printf("Iniciando uma compra Credito Avista\n");
-              break;
-            case 3:
-              printf("Iniciando uma compra PIX\n");
-              printf("Valor da Transação: ");
-              scanf("%s", &amount);
-              printf("Chave Pix: ");
-              scanf("%s", &chavePix);
-              int iret =transactionPix(amount, chavePix);
-              if(result != 0)
-                printf("Falha na Transação\n");
-              break;
-            case 4:
-              aplicationMain2 = false;
-              break;
-            default:
-              aplicationMain2 = false;
-              break;
-          }
-        }
-        break;
-      default:
-        aplicationMain = false;
-        break;
-    };*/
   };
 
   return 0;

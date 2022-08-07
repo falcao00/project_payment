@@ -185,6 +185,13 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   }
   char tmpAcountValue[1024];
   fgets(tmpAcountValue, sizeof(tmpAcountValue), fileAccount);
+  
+  //confere se existe um estorno, caso não exista quebra
+  if(strcmp(tmpAcountValue, "") == 0){
+    printf("~ Não existe transação para ser estornada ~\n\n");
+    return -3;
+  }
+  
   char valuesAccount[sizeof(tmpAcountValue)];
   strcpy(valuesAccount, strtok(tmpAcountValue, ";"));
 
@@ -236,8 +243,41 @@ int estornoFunction(char* cardNumber, char* cardPassword){
     }
     strcpy(valuesAccount2, strtok(NULL, ";"));
   }
+
+  if(strcmp(cardAccount, cardNumber) != 0 || strcmp(cardPassw, cardPassword) != 0){
+    printf("Numero do cartão ou senha errados\n\n");
+    return -2;
+  }
+
   fclose(fileAccountcard);
 
+  int estornoAmount = atoi(logAmount);
+  int estornoCardAmount = atoi(cardAmount);
+  float valorEstornadoFinal = estornoAmount + estornoCardAmount;
+
+  printf("Valor final somando o estorno ao valor do cartão: %.2f\n\n", valorEstornadoFinal);
+  char convertionFinal[1024];
+  sprintf(convertionFinal,"%.2f",valorEstornadoFinal);
+  printf("Valor final somando o estorno ao valor do cartão: %s\n\n", convertionFinal);
+
+  //montarInfoCardAccount
+  FILE * fileFinalAccount = fopen("../accounts/account-card.txt", "w");
+  char finalStringAccount[2048];
+  strcpy(finalStringAccount, cardAccount);
+  strcat(finalStringAccount, ";");
+  strcat(finalStringAccount, cardPassword);
+  strcat(finalStringAccount, ";");
+  strcat(finalStringAccount, convertionFinal);
+  strcat(finalStringAccount, ";");
+  printf("Remontando o arquivo com valores atualizados: %s\n\n", finalStringAccount);
+  fputs(finalStringAccount, fileFinalAccount);
+  fclose(fileFinalAccount);
+
+  //FILE * fileLogFinal = fopen()
+  FILE* fileLogFinal = fopen("../logTransaction/logTransFile.txt", "w");
+  char ResetLog[1024] = "";
+  fputs(ResetLog, fileLogFinal);
+  fclose(fileLogFinal);
 
   return 0;
 }
