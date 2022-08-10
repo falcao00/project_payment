@@ -1,0 +1,3 @@
+payment/*.o
+payment/app
+build/

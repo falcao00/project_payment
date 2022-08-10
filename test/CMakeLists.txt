@@ -1,0 +1,1 @@
+add_library(test main_test.cpp payment_test.cpp)

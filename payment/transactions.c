@@ -178,6 +178,7 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   char logCardAccount[1024];
   char logAmount[1024];
 
+  printf("\n\nSEGMENTEDFAULTD\n\n");
   FILE* fileAccount = fopen("../logTransaction/logTransFile.txt", "r");
   if(fileAccount == NULL){
     printf("Erro ao abrir o arquivo\n");
@@ -185,14 +186,15 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   }
   char tmpAcountValue[1024];
   fgets(tmpAcountValue, sizeof(tmpAcountValue), fileAccount);
-  
+  char valuesAccount[sizeof(tmpAcountValue)];
+
   //confere se existe um estorno, caso não exista quebra
-  if(strcmp(tmpAcountValue, "") == 0){
+  if(strcmp(tmpAcountValue, "") == 0 || strcmp(valuesAccount, "") != 0){
     printf("~ Não existe transação para ser estornada ~\n\n");
     return -3;
   }
   
-  char valuesAccount[sizeof(tmpAcountValue)];
+  //char valuesAccount[sizeof(tmpAcountValue)];
   strcpy(valuesAccount, strtok(tmpAcountValue, ";"));
 
   //popular variaveis com os valores do arquivo de log
@@ -278,6 +280,11 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   char ResetLog[1024] = "";
   fputs(ResetLog, fileLogFinal);
   fclose(fileLogFinal);
+
+  memset(valuesAccount, 0, sizeof(valuesAccount));
+  memset(valuesAccount2, 0, sizeof(valuesAccount2));
+  memset(tmpAcountValue, 0, sizeof(tmpAcountValue));
+  memset(tmpAcountValue2, 0, sizeof(tmpAcountValue2));
 
   return 0;
 }
