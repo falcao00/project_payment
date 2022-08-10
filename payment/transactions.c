@@ -90,14 +90,11 @@ int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcela
 int transactionPix(char* transactionAmount, char* pixChave){
   //validacao(-1) valores não validos
   int tmpTransAmount = atoi(transactionAmount);
-  if(tmpTransAmount < 0)
+  if(tmpTransAmount <= 0)
     return -1;
 
   char pixKeyAccount[1024];
   char pixAmountAccount[1024];
-
-  printf("Valores Da transação: %s\n\n", transactionAmount);
-  printf("Chave pix passada: %s\n\n", pixChave);
 
   //checkaccounts()
   FILE* fileAccount = fopen("../accounts/account-pix.txt", "r");
@@ -114,10 +111,8 @@ int transactionPix(char* transactionAmount, char* pixChave){
   for (int i = 0; i < 2; i++)
   {
     if(i == 0) {
-      printf("Chave Pix: %s\n\n", valuesAccount);
       strcpy(pixKeyAccount, valuesAccount);
     } else {
-      printf("Valor Disponivel na conta: %s\n\n", valuesAccount);
       strcpy(pixAmountAccount, valuesAccount);
       break;
     }
@@ -125,8 +120,10 @@ int transactionPix(char* transactionAmount, char* pixChave){
   }
 
   //-2 validacao se a chave pix está acorreta
-  if(strcmp(pixChave, pixKeyAccount) != 0)
+  if(strcmp(pixChave, pixKeyAccount) != 0){
+    printf("Credencial Pix incorreta\n");    
     return -2;
+  }
 
   //float juros = tmpTransAmount * (numParcelas * 0.01); 
   float finalValueTransaction;
@@ -135,7 +132,6 @@ int transactionPix(char* transactionAmount, char* pixChave){
   int tmpAccountAmount = atoi(pixAmountAccount);
   finalValueTransaction = tmpAccountAmount - tmpTransAmount;
   sprintf(pixAmountAccount,"%.2f",finalValueTransaction);
-  printf("Valor final transação: %.2f\n\n", finalValueTransaction);
   fclose(fileAccount);
 
   //remotando o arquivo da conta pix
@@ -144,7 +140,6 @@ int transactionPix(char* transactionAmount, char* pixChave){
   strcat(writeNewValuesAccount, ";");
   strcat(writeNewValuesAccount, pixAmountAccount);
   strcat(writeNewValuesAccount, ";");
-  printf("Remontando o arquivo com valores atualizados: %s\n\n", writeNewValuesAccount);
 
   FILE* fileAccountW = fopen("../accounts/account-pix.txt", "w");
   if(fileAccountW == NULL){
@@ -178,7 +173,6 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   char logCardAccount[1024];
   char logAmount[1024];
 
-  printf("\n\nSEGMENTEDFAULTD\n\n");
   FILE* fileAccount = fopen("../logTransaction/logTransFile.txt", "r");
   if(fileAccount == NULL){
     printf("Erro ao abrir o arquivo\n");
@@ -189,7 +183,7 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   char valuesAccount[sizeof(tmpAcountValue)];
 
   //confere se existe um estorno, caso não exista quebra
-  if(strcmp(tmpAcountValue, "") == 0 || strcmp(valuesAccount, "") != 0){
+  if(strcmp(tmpAcountValue, "") == 0){
     printf("~ Não existe transação para ser estornada ~\n\n");
     return -3;
   }
@@ -201,18 +195,14 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   for (int i = 0; i < 2; i++)
   {
     if(i == 0) {
-      printf("Numero do cartão: %s\n\n", valuesAccount);
       strcpy(logCardAccount, valuesAccount);
     } else {
-      printf("Valor da ultima transação: %s\n\n", valuesAccount);
       strcpy(logAmount, valuesAccount);
       break;
     }
     strcpy(valuesAccount, strtok(NULL, ";"));
   }
   fclose(fileAccount);
-  printf("Valores recuperados numero do cartão: %s\n\n", logCardAccount);
-  printf("Valores recuperados Amount: %s\n\n", logAmount);
 
   //abrindo o arquivo do account-card
   FILE * fileAccountcard = fopen("../accounts/account-card.txt", "r");
@@ -233,13 +223,10 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   for (int i = 0; i < 3; i++)
   {
     if(i == 0) {
-      printf("Cartão da conta: %s\n\n", valuesAccount2);
       strcpy(cardAccount, valuesAccount2);
     } else if (i == 1) {
-      printf("Senha da conta: %s\n\n", valuesAccount2);
       strcpy(cardPassw, valuesAccount2);
     } else {
-      printf("Credito da Conta: %s\n\n", valuesAccount2);
       strcpy(cardAmount, valuesAccount2);
       break;
     }
@@ -257,10 +244,8 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   int estornoCardAmount = atoi(cardAmount);
   float valorEstornadoFinal = estornoAmount + estornoCardAmount;
 
-  printf("Valor final somando o estorno ao valor do cartão: %.2f\n\n", valorEstornadoFinal);
   char convertionFinal[1024];
   sprintf(convertionFinal,"%.2f",valorEstornadoFinal);
-  printf("Valor final somando o estorno ao valor do cartão: %s\n\n", convertionFinal);
 
   //montarInfoCardAccount
   FILE * fileFinalAccount = fopen("../accounts/account-card.txt", "w");
@@ -271,7 +256,6 @@ int estornoFunction(char* cardNumber, char* cardPassword){
   strcat(finalStringAccount, ";");
   strcat(finalStringAccount, convertionFinal);
   strcat(finalStringAccount, ";");
-  printf("Remontando o arquivo com valores atualizados: %s\n\n", finalStringAccount);
   fputs(finalStringAccount, fileFinalAccount);
   fclose(fileFinalAccount);
 

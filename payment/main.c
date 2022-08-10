@@ -47,7 +47,6 @@ int main(void){
         printf("\nSenha do Cartão: ");
         scanf("%s", cardPassword);
         result = estornoFunction(cardNumber, cardPassword);
-        printf("resultado do estorno: %d\n\n", result);
         break;
       default:
         aplicationMain = false;
