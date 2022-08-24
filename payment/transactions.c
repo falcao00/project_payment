@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "transactions.h"
 #include "accountFunctions.h"
 
@@ -12,7 +13,7 @@ extern struct cardInfo helena;
  * Com um Juros de 0.5 * Numero de Parcelas 
  * 
 */
-int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcelas, char* cardPassword){
+int transactionCreditPs(char* transactionAmount, char* cardNumber, int numParcelas, char* cardPassword){
   //validacao(-1) valores não validos
   int tmpTransAmount = atoi(transactionAmount);
   if(tmpTransAmount < 0 || numParcelas <= 1 || numParcelas > 18)
@@ -23,10 +24,10 @@ int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcela
   char creditCardAmountAccount[1024];
 
   //checkaccounts()
-  FILE* fileAccount = fopen("../accounts/account-card.txt", "r");
+  FILE* fileAccount = fopen("/home/falcao/estudos_c/projeto_c/project_payment/accounts/account-card.txt", "r");
   if(fileAccount == NULL){
-    printf("Erro ao abrir o arquivo\n");
-    return -1;
+    //printf("\nErro ao abrir o arquivo\n");
+    return -3;
   }
   char tmpAcountValue[1024];
   fgets(tmpAcountValue, sizeof(tmpAcountValue), fileAccount);
@@ -70,15 +71,15 @@ int transactionCreditP(char* transactionAmount, char* cardNumber, int numParcela
   strcat(writeNewValuesAccount, ";");
   strcat(writeNewValuesAccount, creditCardAmountAccount);
   strcat(writeNewValuesAccount, ";");
-  FILE* fileAccountW = fopen("../accounts/account-card.txt", "w");
+  FILE* fileAccountW = fopen("/home/falcao/estudos_c/projeto_c/project_payment/accounts/account-card.txt", "w");
   if(fileAccountW == NULL){
     printf("Erro ao abrir o arquivo\n");
-    return -1;
+    return -3;
   }
   fputs(writeNewValuesAccount, fileAccount);
   fclose(fileAccountW);
 
-  printf("\n\nTransação no Valor de: R$%s em %d parcelas.\n\n", transValueFinal,numParcelas);
+  //printf("\n\nTransação no Valor de: R$%s em %d parcelas.\n\n", transValueFinal,numParcelas);
   //fim da transação
 
   //logarNOarquivodeLogTrans
@@ -97,10 +98,10 @@ int transactionPix(char* transactionAmount, char* pixChave){
   char pixAmountAccount[1024];
 
   //checkaccounts()
-  FILE* fileAccount = fopen("../accounts/account-pix.txt", "r");
+  FILE* fileAccount = fopen("/home/falcao/estudos_c/projeto_c/project_payment/accounts/account-pix.txt", "r");
   if(fileAccount == NULL){
-    printf("Erro ao abrir o arquivo\n");
-    return -1;
+    //printf("Erro ao abrir o arquivo\n");
+    return -3;
   }
   char tmpAcountValue[1024];
   fgets(tmpAcountValue, sizeof(tmpAcountValue), fileAccount);
@@ -121,7 +122,7 @@ int transactionPix(char* transactionAmount, char* pixChave){
 
   //-2 validacao se a chave pix está acorreta
   if(strcmp(pixChave, pixKeyAccount) != 0){
-    printf("Credencial Pix incorreta\n");    
+    //printf("Credencial Pix incorreta\n");    
     return -2;
   }
 
@@ -141,24 +142,32 @@ int transactionPix(char* transactionAmount, char* pixChave){
   strcat(writeNewValuesAccount, pixAmountAccount);
   strcat(writeNewValuesAccount, ";");
 
-  FILE* fileAccountW = fopen("../accounts/account-pix.txt", "w");
+  FILE* fileAccountW = fopen("/home/falcao/estudos_c/projeto_c/project_payment/accounts/account-pix.txt", "w");
   if(fileAccountW == NULL){
     printf("Erro ao abrir o arquivo\n");
-    return -1;
+    return -3;
   }
   fputs(writeNewValuesAccount, fileAccount);
   fclose(fileAccountW);
 
-  printf("\n\nTransação no Valor PIX de: R$%d.\n\n", tmpTransAmount);
+  //printf("\n\nTransação no Valor PIX de: R$%d.\n\n", tmpTransAmount);
 
-  //logTransaction(pixChave, transactionAmount);
+  int endTransaction = logTransaction(pixChave, transactionAmount);
+  if (endTransaction != 0){
+    printf("Erro ao gerar o log de transação");
+    return -1;
+  }
 
   return 0;
 }
 
 int logTransaction(char* cardNumber, char* amountTrans){
   FILE * LogTransfile;
-  LogTransfile = fopen("../logTransaction/logTransFile.txt", "w");
+  LogTransfile = fopen("/home/falcao/estudos_c/projeto_c/project_payment/logTransaction/logTransFile.txt", "w");
+  if(LogTransfile == NULL){
+    //printf("Erro ao abrir o arquivo\n");
+    return -3;
+  }
   char transValue[1024];
   strcpy(transValue, cardNumber);
   strcat(transValue, ";");

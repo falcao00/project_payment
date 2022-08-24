@@ -30,7 +30,7 @@ int main(void){
         scanf("%d", &parcelas);
         printf("\nSenha do Cartão: ");
         scanf("%s", cardPassword);
-        result = transactionCreditP(&amount, &cardNumber, parcelas, &cardPassword);
+        result = transactionCreditPs(&amount, &cardNumber, parcelas, &cardPassword);
         break;
       case 2:
         printf("Digitar os valores: \n");
