@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "accountFunctions.h"
+#include "transactions.h"
 #include "screen.h"
 
 int aplicationStart(){
@@ -33,6 +34,9 @@ int aplicationStart(){
         printf("\nSenha do Cartão: ");
         scanf("%s", cardPassword);
         result = transactionCreditPs(&amount, &cardNumber, parcelas, &cardPassword);
+        if (result != 0){
+          printf("\n\nERRO: %d\n\n", result);
+        }
         break;
       case 2:
         printf("Digitar os valores: \n");
@@ -43,6 +47,9 @@ int aplicationStart(){
         printf("\nSenha do Cartão: ");
         scanf("%s", cardPassword);
         result = transactionAvista(&amount, &cardNumber, &cardPassword);
+        if (result != 0){
+          printf("\n\nERRO: %d\n\n", result);
+        }
         break;
       case 3:
         printf("Digitar os valores: \n");
@@ -51,6 +58,10 @@ int aplicationStart(){
         printf("\nValor da Transação: ");
         scanf("%s", amount);
         result = transactionPix(&amount, &pixKey);
+        if (result != 0){
+          printf("\n\nERRO: %d\n\n", result);
+        }
+        break;
       case 4:
         printf("Digite as informacoes do cartao para o estorno: \n");
         printf("Numero do Cartão: ");
@@ -58,6 +69,9 @@ int aplicationStart(){
         printf("\nSenha do Cartão: ");
         scanf("%s", cardPassword);
         result = estornoFunction(cardNumber, cardPassword);
+        if (result != 0){
+          printf("\n\nERRO: %d\n\n", result);
+        }
         break;
       default:
         aplicationMain = false;

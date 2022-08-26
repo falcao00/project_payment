@@ -15,7 +15,7 @@ extern struct cardInfo helena;
 */
 int transactionCreditPs(char* transactionAmount, char* cardNumber, int numParcelas, char* cardPassword){
   //validacao(-1) valores não validos
-  int tmpTransAmount = atoi(transactionAmount);
+  float tmpTransAmount = atof(transactionAmount);
   if(tmpTransAmount < 0 || numParcelas <= 1 || numParcelas > 18)
     return -1;
   
@@ -55,7 +55,7 @@ int transactionCreditPs(char* transactionAmount, char* cardNumber, int numParcel
     return -2;
 
   //logica da transação
-  float juros = tmpTransAmount * (numParcelas * 0.01); 
+  float juros = tmpTransAmount * (numParcelas * 0.01);
   float finalValueTransaction = tmpTransAmount + juros;
   char transValueFinal[1024];
   sprintf(transValueFinal,"%.2f",finalValueTransaction);
@@ -90,7 +90,7 @@ int transactionCreditPs(char* transactionAmount, char* cardNumber, int numParcel
 
 int transactionPix(char* transactionAmount, char* pixChave){
   //validacao(-1) valores não validos
-  int tmpTransAmount = atoi(transactionAmount);
+  float tmpTransAmount = atof(transactionAmount);
   if(tmpTransAmount <= 0)
     return -1;
 
@@ -130,7 +130,7 @@ int transactionPix(char* transactionAmount, char* pixChave){
   float finalValueTransaction;
   //char transValueFinal[1024];
   //sprintf(transValueFinal,"%.2f",finalValueTransaction);
-  int tmpAccountAmount = atoi(pixAmountAccount);
+  float tmpAccountAmount = atof(pixAmountAccount);
   finalValueTransaction = tmpAccountAmount - tmpTransAmount;
   sprintf(pixAmountAccount,"%.2f",finalValueTransaction);
   fclose(fileAccount);
@@ -250,8 +250,8 @@ int estornoFunction(char* cardNumber, char* cardPassword){
 
   fclose(fileAccountcard);
 
-  int estornoAmount = atoi(logAmount);
-  int estornoCardAmount = atoi(cardAmount);
+  float estornoAmount = atof(logAmount);
+  float estornoCardAmount = atof(cardAmount);
   float valorEstornadoFinal = estornoAmount + estornoCardAmount;
 
   char convertionFinal[1024];
@@ -285,7 +285,7 @@ int estornoFunction(char* cardNumber, char* cardPassword){
 
 int transactionAvista(char* transactionAmount, char* cardNumber, char* cardPassword){
 
-  int tmpTransAmount = atoi(transactionAmount);
+  float tmpTransAmount = atof(transactionAmount);
   if(tmpTransAmount < 0)
     return -1;
 
@@ -333,7 +333,7 @@ int transactionAvista(char* transactionAmount, char* cardNumber, char* cardPassw
   float finalValueTransaction = tmpTransAmount;
   char transValueFinal[1024];
   sprintf(transValueFinal,"%.2f",finalValueTransaction);
-  int tmpAccountAmount = atoi(creditCardAmountAccount);
+  float tmpAccountAmount = atof(creditCardAmountAccount);
   finalValueTransaction = tmpAccountAmount - finalValueTransaction;
   sprintf(creditCardAmountAccount,"%.2f",finalValueTransaction);
 

@@ -60,7 +60,7 @@ TEST(paymentTest, pagamentoCreditoParcelasInvalidaMaisde10) {
     char amount[1024] = "100";
     char cardNumber[1024] = "1234-5678-9123-4567";
     char cardPassword[1024] = "159753";
-    int  parcelas = -20;
+    int  parcelas = 20;
 
     int result = transactionCreditPs(amount, cardNumber, parcelas, cardPassword);
 
