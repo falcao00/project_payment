@@ -166,6 +166,7 @@ int logTransaction(char* cardNumber, char* amountTrans){
   LogTransfile = fopen("/home/falcao/estudos_c/projeto_c/project_payment/logTransaction/logTransFile.txt", "w");
   if(LogTransfile == NULL){
     //printf("Erro ao abrir o arquivo\n");
+    printf("HERE ENTRANDNO NO IF");
     return -3;
   }
   char transValue[1024];

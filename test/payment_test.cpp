@@ -191,13 +191,13 @@ TEST(paymentTest, logTransactionTestHappyPath) {
     fgets(tempFileString, sizeof(tempFileString), Filetemp);
     fclose(Filetemp);
 
-    EXPECT_STREQ ("1234-5678-9123-4567;100.00", tempFileString);
+    EXPECT_STREQ ("1234-5678-9123-4567;102.00", tempFileString);
     //logTransaction(cardNumber, amount);
     
 }
 
 //não testado ainda
-TEST(paymentTest, logTransactionTestNoFile) {
+/*TEST(paymentTest, logTransactionTestNoFile) {
     int payresult = 0;
 
     char amount[1024] = "100";
@@ -209,7 +209,7 @@ TEST(paymentTest, logTransactionTestNoFile) {
 
     EXPECT_EQ (0, result1);
 
-    remove("/home/falcao/estudos_c/projeto_c/project_payment/accounts/account-pix.txt");
+    remove("/home/falcao/estudos_c/projeto_c/project_payment/logTransaction/logTransFile.txt");
 
     int result = logTransaction(cardNumber, amount);
     EXPECT_EQ (-3, result);
@@ -217,4 +217,4 @@ TEST(paymentTest, logTransactionTestNoFile) {
     FILE* Filetemp = fopen("/home/falcao/estudos_c/projeto_c/project_payment/logTransaction/logTransFile.txt", "r");
     fclose(Filetemp);
    
-}
+}*/
