@@ -281,3 +281,79 @@ int estornoFunction(char* cardNumber, char* cardPassword){
 
   return 0;
 }
+
+int transactionAvista(char* transactionAmount, char* cardNumber, char* cardPassword){
+
+  int tmpTransAmount = atoi(transactionAmount);
+  if(tmpTransAmount < 0)
+    return -1;
+
+  char cardNumberAccount[1024];
+  char passWordNumberAccount[1024];
+  char creditCardAmountAccount[1024];
+
+  FILE* fileAccount = fopen("/home/falcao/estudos_c/projeto_c/project_payment/accounts/account-card.txt", "r");
+  if(fileAccount == NULL){
+    //printf("\nErro ao abrir o arquivo\n");
+    return -3;
+  }
+  char tmpAcountValue[1024];
+  fgets(tmpAcountValue, sizeof(tmpAcountValue), fileAccount);
+  char valuesAccount[sizeof(tmpAcountValue)];
+  strcpy(valuesAccount, strtok(tmpAcountValue, ";"));
+  //struct cardInfo account;
+  //populando as Variaveis com as informações do Cartao
+  for (int i = 0; i < 3; i++)
+  {
+    if(i == 0) {
+      strcpy(cardNumberAccount, valuesAccount);
+    } else if (i == 1) { 
+      strcpy(passWordNumberAccount, valuesAccount);
+    } else {
+      strcpy(creditCardAmountAccount, valuesAccount);
+      break;
+    }
+    strcpy(valuesAccount, strtok(NULL, ";"));
+  }
+
+  int comp = strcmp(cardNumber, cardNumberAccount);
+  int comp2 = strcmp(cardPassword, passWordNumberAccount);
+  if(strcmp(cardNumber, cardNumberAccount) != 0 || strcmp(cardPassword, passWordNumberAccount) != 0)
+    return -2;
+
+  /*float juros = tmpTransAmount * (numParcelas * 0.01); 
+  float finalValueTransaction = tmpTransAmount;
+  char transValueFinal[1024];
+  sprintf(transValueFinal,"%.2f",finalValueTransaction);
+  int tmpAccountAmount = atoi(creditCardAmountAccount);
+  finalValueTransaction = tmpAccountAmount - finalValueTransaction;
+  sprintf(creditCardAmountAccount,"%.2f",finalValueTransaction);*/
+
+  float finalValueTransaction = tmpTransAmount;
+  char transValueFinal[1024];
+  sprintf(transValueFinal,"%.2f",finalValueTransaction);
+  int tmpAccountAmount = atoi(creditCardAmountAccount);
+  finalValueTransaction = tmpAccountAmount - finalValueTransaction;
+  sprintf(creditCardAmountAccount,"%.2f",finalValueTransaction);
+
+  fclose(fileAccount);
+  char writeNewValuesAccount[3072];
+  strcpy(writeNewValuesAccount, cardNumberAccount);
+  strcat(writeNewValuesAccount, ";");
+  strcat(writeNewValuesAccount, passWordNumberAccount);
+  strcat(writeNewValuesAccount, ";");
+  strcat(writeNewValuesAccount, creditCardAmountAccount);
+  strcat(writeNewValuesAccount, ";");
+
+  FILE* fileAccountW = fopen("/home/falcao/estudos_c/projeto_c/project_payment/accounts/account-card.txt", "w");
+  if(fileAccountW == NULL){
+    printf("Erro ao abrir o arquivo\n");
+    return -3;
+  }
+  fputs(writeNewValuesAccount, fileAccount);
+  fclose(fileAccountW);
+
+  logTransaction(cardNumberAccount, transValueFinal);
+
+  return 0;
+}

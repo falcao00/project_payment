@@ -15,8 +15,9 @@ int main(void){
   while(aplicationMain){
     printf("Menu de Opções\n");
     printf("[1]- Credito Parcelado\n");
-    printf("[2]- Pagamento Pix\n");
-    printf("[3]- Estorno\n");
+    printf("[2]- Credito Avista\n");
+    printf("[3]- Pagamento Pix\n");
+    printf("[4]- Estorno\n");
     int functionValue = 0;
     scanf("%d", &functionValue);
     switch(functionValue){
@@ -34,13 +35,22 @@ int main(void){
         break;
       case 2:
         printf("Digitar os valores: \n");
+        printf("Numero do Cartão: ");
+        scanf("%s", cardNumber);
+        printf("\nValor da Transação: ");
+        scanf("%s", amount);
+        printf("\nSenha do Cartão: ");
+        scanf("%s", cardPassword);
+        result = transactionAvista(&amount, &cardNumber, &cardPassword);
+        break;
+      case 3:
+        printf("Digitar os valores: \n");
         printf("Chave Pix: ");
         scanf("%s", pixKey);
         printf("\nValor da Transação: ");
         scanf("%s", amount);
         result = transactionPix(&amount, &pixKey);
-        break;
-      case 3:
+      case 4:
         printf("Digite as informacoes do cartao para o estorno: \n");
         printf("Numero do Cartão: ");
         scanf("%s", cardNumber);

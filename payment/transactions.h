@@ -3,6 +3,8 @@
 
 int transactionCreditPs(char* transactionAmount, char* cardNumber, int numParcelas, char* cardPassword);
 
+int transactionAvista(char* transactionAmount, char* cardNumber, char* cardPassword);
+
 int transactionPix(char* transactionAmount, char* pixChave);
 
 int logTransaction(char* cardNumber, char* amountTrans);
