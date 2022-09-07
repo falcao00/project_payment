@@ -2,9 +2,9 @@
 #define ACCOUNT_H_INCLUDED
 
 struct cardInfo{
-  char idCardNumber[1000];
-  char password[20];
-  int  amount[5];
+  char idCardNumber[1024];
+  char* password[1024];
+  char*  amount[1024];
 };
 
 int accountCreation(void);
